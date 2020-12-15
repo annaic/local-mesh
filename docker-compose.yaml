@@ -1,0 +1,19 @@
+version: "3.7"
+
+
+services:
+  httpbin-service:
+    image: citizenstig/httpbin
+    network_mode: "container:bootstrap-container"
+  service-mesh:
+    build:
+      context: ./mesh
+      dockerfile: Dockerfile-servicemesh
+    volumes:
+      - ./service/simple-httpbin.yaml:/etc/servicemesh.yaml
+    network_mode: "container:bootstrap-container"
+    environment:
+      - ENVOY_UID=1337
+      - ENVOY_GID=1337
+
+

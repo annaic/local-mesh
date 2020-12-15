@@ -1,0 +1,23 @@
+version: "3.7"
+
+networks:
+  envoyproxy:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+services:
+  bootstrap-container:
+    build:
+      context: .
+      dockerfile: Dockerfile-boot
+    tty: true
+    container_name: bootstrap-container
+    cap_add:
+      - NET_ADMIN
+    networks:
+     envoyproxy:
+        ipv4_address: 172.20.0.2
+    ports:
+      - "8000:8000" # Service endpoint
+      - "9901:9901" # Envoy admin port

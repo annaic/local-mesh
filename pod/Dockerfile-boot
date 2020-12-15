@@ -1,0 +1,5 @@
+FROM docker.io/centos:centos8
+RUN yum install iptables net-tools which sudo -y
+COPY ./run-iptables.sh /
+RUN chmod +x /run-iptables.sh
+ENTRYPOINT ["/run-iptables.sh"]
